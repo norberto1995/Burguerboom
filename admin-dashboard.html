@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="Restaurante con auténtica gastronomía caribeña" />
+    <meta name="author" content="TechSysDesign" />
+    <title>Admin Dashboard</title>
+    <!-- core bootstrap -->
+    <link href="./assets/css/Bootstrap.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://unpkg.com/tabulator-tables@5.5.0/dist/css/tabulator_bootstrap5.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.14.5/sweetalert2.css"
+        integrity="sha512-6qScZESleBziOBqJwOPurSy6lhLqHGjHNALOOFX0mzRVPiE5SZQvepRzeSO1OB475fcZywuMjxtkrFaO93aq9g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/virtual-select-plugin@1.0.46/dist/virtual-select.min.css">
+    <link rel="stylesheet" href="./assets/css/components.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    
+    <style>
+        /* Estilos personalizados para el dashboard */
+        .card-stats .icon-box {
+            width: 55px;
+            height: 55px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            font-size: 1.5rem;
+        }
+        
+        .quick-access-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-radius: 12px;
+        }
+        
+        .quick-access-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .status-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+        
+        .status-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 5px;
+        }
+        
+        .reservation-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .reservation-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+
+<body class="d-flex flex-column h-100">
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <div class="sidebar bg-primary">
+            <div class="text-center p-2">
+                <!-- Logo -->
+                <i class='bx bxs-cube-alt bx-lg text-white'></i>
+            </div>
+            <ul class="sidebar-nav mt-1">
+                <li class="sidebar-item">
+                    <a href="admin-dashboard.html" class="sidebar-link active">
+                        <i class='bx bxs-dashboard'></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="admin-usuarios.html" class="sidebar-link">
+                        <i class='bx bxs-user'></i>
+                        <span>Usuarios</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="admin-menu.html" class="sidebar-link">
+                        <i class='bx bxs-food-menu'></i>
+                        <span>Menu</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="admin-resenas.html" class="sidebar-link">
+                        <i class='bx bx-receipt'></i>
+                        <span>Reseñas</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="admin-reservas.html" class="sidebar-link">
+                        <i class='bx bxs-message-dots'></i>
+                        <span>Reservas</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="admin-novedades.html" class="sidebar-link">
+                        <i class='bx bxs-edit-alt'></i>
+                        <span>Novedades</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="admin-sedes.html" class="sidebar-link">
+                        <i class='bx bxs-building-house'></i>
+                        <span>Sedes</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="admin-configuracion.html" class="sidebar-link">
+                        <i class='bx bx-cog'></i>
+                        <span>Configuración</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Main content -->
+        <div class="main">
+            <!-- Navbar -->
+            <nav class="navbar navbar-expand-lg navbar-light bg-white shadow p-0">
+                <div class="container-fluid">
+                    <!-- Sidebar Toggle Button -->
+                    <div class="toggle-btn" type="button">
+                        <i class='bx bx-menu fs-1'></i>
+                    </div>
+                    <div class="collapse navbar-collapse justify-content-end">
+                        <!-- Dropdown de Administrador -->
+                        <div class="dropdown">
+                            <a class="btn dropdown-toggle d-flex align-items-center" href="#" role="button"
+                                id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span class="me-2">Administrador</span>
+                                <i class='bx bxs-user-circle fs-1'></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink">
+                                <li><a class="dropdown-item" id="logoutButton" href="#">Cerrar Sesión</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>            <div class="container-fluid p-4">
+                <!-- Header / Welcome Banner -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card shadow-sm animate__animated animate__fadeIn">
+                            <div class="card-body bg-primary text-white rounded-3">
+                                <div class="d-flex align-items-center">
+                                    <div>
+                                        <h2 class="mb-1">¡Bienvenido al Panel de Administración!</h2>
+                                        <p class="mb-0">Gestiona todos los aspectos del restaurante desde este panel</p>
+                                    </div>
+                                    <div class="ms-auto">
+                                        <i class='bx bxs-dashboard' style="font-size: 3rem;"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stats Cards Row -->
+                <div class="row g-4 mb-4">
+                    <div class="col-md-3">
+                        <div class="card shadow-sm h-100 card-stats animate__animated animate__fadeIn">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center mb-3">
+                                    <div class="icon-box bg-primary-subtle me-3">
+                                        <i class="bi bi-calendar-check text-primary"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-muted mb-0">Reservas Pendientes</p>
+                                        <h3 id="pendingCount" class="mb-0">0</h3>
+                                    </div>
+                                </div>
+                                <div class="progress" style="height: 5px;">
+                                    <div class="progress-bar bg-primary" role="progressbar" style="width: 35%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card shadow-sm h-100 card-stats animate__animated animate__fadeIn" style="animation-delay: 0.1s;">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center mb-3">
+                                    <div class="icon-box bg-success-subtle me-3">
+                                        <i class="bi bi-check-circle text-success"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-muted mb-0">Reservas Confirmadas</p>
+                                        <h3 id="confirmedCount" class="mb-0">0</h3>
+                                    </div>
+                                </div>
+                                <div class="progress" style="height: 5px;">
+                                    <div class="progress-bar bg-success" role="progressbar" style="width: 50%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card shadow-sm h-100 card-stats animate__animated animate__fadeIn" style="animation-delay: 0.2s;">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center mb-3">
+                                    <div class="icon-box bg-danger-subtle me-3">
+                                        <i class="bi bi-x-circle text-danger"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-muted mb-0">Reservas Canceladas</p>
+                                        <h3 id="cancelledCount" class="mb-0">0</h3>
+                                    </div>
+                                </div>
+                                <div class="progress" style="height: 5px;">
+                                    <div class="progress-bar bg-danger" role="progressbar" style="width: 15%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card shadow-sm h-100 card-stats animate__animated animate__fadeIn" style="animation-delay: 0.3s;">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center mb-3">
+                                    <div class="icon-box bg-info-subtle me-3">
+                                        <i class="bi bi-people text-info"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-muted mb-0">Total Usuarios</p>
+                                        <h3 id="usersCount" class="mb-0">0</h3>
+                                    </div>
+                                </div>
+                                <div class="progress" style="height: 5px;">
+                                    <div class="progress-bar bg-info" role="progressbar" style="width: 70%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Access Cards -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <h4 class="mb-3">Accesos Rápidos</h4>
+                    </div>
+                </div>
+                <div class="row row-cols-1 row-cols-md-3 g-4 mb-4">
+                    <div class="col">
+                        <div class="card h-100 border-0 shadow quick-access-card animate__animated animate__fadeIn">
+                            <div class="card-body d-flex align-items-center">
+                                <div class="me-3">
+                                    <div class="rounded-circle bg-primary-subtle p-3">
+                                        <i class='bx bxs-user bx-lg text-primary'></i>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h5 class="card-title">Usuarios</h5>
+                                    <p class="card-text">Gestiona los usuarios del sistema.</p>
+                                    <a href="admin-usuarios.html" class="btn btn-primary">Ir a Usuarios</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card h-100 border-0 shadow quick-access-card animate__animated animate__fadeIn" style="animation-delay: 0.1s;">
+                            <div class="card-body d-flex align-items-center">
+                                <div class="me-3">
+                                    <div class="rounded-circle bg-primary-subtle p-3">
+                                        <i class='bx bxs-food-menu bx-lg text-primary'></i>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h5 class="card-title">Menu</h5>
+                                    <p class="card-text">Gestiona el menú del restaurante.</p>
+                                    <a href="admin-menu.html" class="btn btn-primary">Ir a Menu</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card h-100 border-0 shadow quick-access-card animate__animated animate__fadeIn" style="animation-delay: 0.2s;">
+                            <div class="card-body d-flex align-items-center">
+                                <div class="me-3">
+                                    <div class="rounded-circle bg-primary-subtle p-3">
+                                        <i class='bx bx-receipt bx-lg text-primary'></i>
+                                    </div>
+                                </div>                                <div>
+                                    <h5 class="card-title">Reseñas</h5>
+                                    <p class="card-text">Gestiona las reseñas de los clientes.</p>
+                                    <a href="admin-resenas.html" class="btn btn-primary">Ir a Reseñas</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card h-100 border-0 shadow quick-access-card animate__animated animate__fadeIn" style="animation-delay: 0.3s;">
+                            <div class="card-body d-flex align-items-center">
+                                <div class="me-3">
+                                    <div class="rounded-circle bg-primary-subtle p-3">
+                                        <i class='bx bxs-message-dots bx-lg text-primary'></i>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h5 class="card-title">Reservas</h5>
+                                    <p class="card-text">Gestiona las reservas del restaurante.</p>
+                                    <a href="admin-reservas.html" class="btn btn-primary">Ir a Reservas</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card h-100 border-0 shadow quick-access-card animate__animated animate__fadeIn" style="animation-delay: 0.4s;">
+                            <div class="card-body d-flex align-items-center">
+                                <div class="me-3">
+                                    <div class="rounded-circle bg-primary-subtle p-3">
+                                        <i class='bx bxs-edit-alt bx-lg text-primary'></i>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h5 class="card-title">Novedades</h5>
+                                    <p class="card-text">Gestiona las novedades del restaurante.</p>
+                                    <a href="admin-novedades.html" class="btn btn-primary">Ir a Novedades</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card h-100 border-0 shadow quick-access-card animate__animated animate__fadeIn" style="animation-delay: 0.5s;">
+                            <div class="card-body d-flex align-items-center">
+                                <div class="me-3">
+                                    <div class="rounded-circle bg-primary-subtle p-3">
+                                        <i class='bx bxs-building-house bx-lg text-primary'></i>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h5 class="card-title">Sedes</h5>
+                                    <p class="card-text">Gestiona las sedes del restaurante.</p>
+                                    <a href="admin-sedes.html" class="btn btn-primary">Ir a Sedes</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Reservas Pendientes -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h4 class="mb-3">Reservas Pendientes</h4>
+                            <div>
+                                <button id="refreshPendingBtn" class="btn btn-sm btn-outline-primary me-2">
+                                    <i class="bi bi-arrow-clockwise"></i> Actualizar
+                                </button>
+                                <a href="admin-reservas.html" class="btn btn-sm btn-primary">
+                                    Ver todas <i class="bi bi-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card shadow-sm">
+                            <div class="card-body">
+                                <div id="pendingReservationsContainer" class="row g-3">
+                                    <!-- Aquí se cargarán las reservas pendientes -->
+                                    <div class="col-12 text-center py-4 placeholder-glow">
+                                        <span class="placeholder col-6"></span>
+                                        <span class="placeholder col-7 mt-2"></span>
+                                        <span class="placeholder col-4 mt-2"></span>
+                                    </div>
+                                </div>
+                                <div id="noPendingReservations" class="text-center py-5" style="display: none;">
+                                    <i class="bi bi-calendar-check fs-1 text-muted"></i>
+                                    <p class="mt-3 text-muted">No hay reservas pendientes en este momento</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Modal para gestionar reservas -->
+            <div class="modal fade" id="reservationModal" tabindex="-1" aria-labelledby="reservationModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="reservationModalLabel">Gestionar Reserva</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div id="reservationDetails">
+                                <!-- Aquí irán los detalles de la reserva -->
+                                <div class="mb-3">
+                                    <strong>Cliente:</strong> <span id="modalClientName"></span>
+                                </div>
+                                <div class="mb-3">
+                                    <strong>Fecha:</strong> <span id="modalReservationDate"></span>
+                                </div>
+                                <div class="mb-3">
+                                    <strong>Hora:</strong> <span id="modalReservationTime"></span>
+                                </div>
+                                <div class="mb-3">
+                                    <strong>Personas:</strong> <span id="modalGuests"></span>
+                                </div>
+                                <div class="mb-3">
+                                    <strong>Sede:</strong> <span id="modalBranch"></span>
+                                </div>
+                                <div class="mb-3">
+                                    <strong>Mesa:</strong> <span id="modalTable"></span>
+                                </div>
+                                <hr>
+                                <div class="mb-3">
+                                    <label for="reservationStatus" class="form-label">Estado de la reserva</label>
+                                    <select id="reservationStatus" class="form-select">
+                                        <option value="PENDING">Pendiente</option>
+                                        <option value="CONFIRMED">Confirmada</option>
+                                        <option value="CANCELLED">Cancelada</option>
+                                        <option value="COMPLETED">Completada</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <button type="button" id="saveReservationStatusBtn" class="btn btn-primary">Guardar Cambios</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Core theme JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://unpkg.com/tabulator-tables/dist/js/tabulator.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.14.5/sweetalert2.all.js"
+        integrity="sha512-AbjPD2rIZFzBugvnJKl8IZmGWWmjmZrYysHZaryYg0+XkoqDpmuKKRxDfVPCaHzf1SB3cwSKkgeEd7xLOmBusQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/virtual-select-plugin@1.0.46/dist/virtual-select.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+        integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
+        crossorigin="anonymous"></script>    <script src="./assets/js/config/jwt-decode.js"></script>
+    <script src="./assets/js/config/validate-auth.js"></script>
+    <script src="./assets/js/config/protect-routes.js"></script>
+    <script src="./assets/js/config/logout.js"></script>
+    <script src="./assets/js/auth.js"></script>
+    <script src="./assets/js/admin/admin-dashboard.js"></script>
+</body>
+
+</html>
